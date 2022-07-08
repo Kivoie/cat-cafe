@@ -48,7 +48,7 @@ if __name__ == "__main__":
 			torrent_list = re.sub(r"\\n", '<br>', str(torrent_list.communicate()[0]))
 			torrent_list = re.sub(r"b\'", '', str(torrent_list))
 			emailContent = 'Torrent \'' + str(passedParameter1) + '\' completed. Log in to verify.' + \
-				"<br><br><p style=\"font-family: courier; white-space: pre-wrap; font-size: 10px;\"><b>Transmission-CLI Ubuntu - Live Report<br>Updated [" + str(current_time.strftime("%Y-%m-%d %H:%H:%S")) +\
+				"<br><br><p style=\"font-family: courier; white-space: pre-wrap; font-size: 16px;\"><b>Transmission-CLI Ubuntu - Live Report<br>Updated [" + str(current_time.strftime("%Y-%m-%d %H:%H:%S")) +\
 				"]</b><br>--------------------------<br>" + str(torrent_list)[:-1] + "</p>"
 
 			try:
