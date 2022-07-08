@@ -1,9 +1,30 @@
 import urllib.request, requests, os, time, re, subprocess, sys
 from bs4 import BeautifulSoup
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# cat-cafe Torrent Bot
+# Copyright (C) 2022 Danny Vuong
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+
 downloads_dir = '/home/ubuntu/Downloads/'
 
 if __name__ == "__main__":
+
+	print("\tcat-cafe  Copyright (C) 2022  Danny Vuong\n\tThis program comes with ABSOLUTELY NO WARRANTY.\n\tThis is free software, and you are welcome to redistribute it\n\tunder certain conditions.")
 
 	try:
 		url = str(sys.argv[1])
@@ -13,7 +34,6 @@ if __name__ == "__main__":
 		quit()
 
 	try:
-		#url = 'https://nyaa.si/?f=0&c=1_0&q=%5BSubsPlease%5D+Heroine+Tarumono%21+720p'			#url to query
 		print(url)
 		client = urllib.request.urlopen(url)							#(attempt to) open a tcp stream. May fail for servers guarded by Cloudflare
 	
@@ -50,11 +70,11 @@ if __name__ == "__main__":
 			for title in titles.splitlines():
 				if title.endswith('.mkv') or title.endswith('.mp4'):
 					tor_titles += title + "\n"
-				if '[batch]' in title.lower() or '(batch)' in title.lower():
+				if '[batch]' in title.lower() or '(batch)' in title.lower() and 'unofficial batch' not in title.lower():
 					tor_titles += title + "\n"
 					batch_find = i
 					break
-			if batch_find:
+			if batch_find != None:
 				break
 
 		for i in range (0,hit_count):								#iterate through all rows and find all anchor <a> tags
@@ -74,7 +94,7 @@ if __name__ == "__main__":
 		print(tor_list)
 
 		if batch_find == None:
-			for i in range (0,hit_count):								#associate each title with their own unique url
+			for i in range (0,hit_count):							#associate each title with their own unique url
 				try:
 					tor_array += [i,tor_titles[i],tor_list[i]]
 				except Exception as e:
@@ -85,11 +105,6 @@ if __name__ == "__main__":
 
 		print(*tor_array, sep = "\n")
 
-		#for i in range (0,hit_count):								#determine if there is a torrent file for 'batch' downloads
-		#	if ('(batch)' or '[batch]') in tor_titles[i].lower():
-		#		batch_find = i
-		#		break
-
 		for i in range (0,hit_count):
 			
 			if batch_find:									#if batch_find was populated from the prevoius block, then immediately set the counter to the located 'batch' file
@@ -98,7 +113,7 @@ if __name__ == "__main__":
 				except Exception as e:
 					print(e)
 							
-			cur_tor = str(downloads_dir) + str(tor_titles[i])					#append the torrent title to the downloads directory for a path-and-file association
+			cur_tor = str(downloads_dir) + str(tor_titles[i])				#append the torrent title to the downloads directory for a path-and-file association
 
 			if cur_tor.lower().endswith('.mkv'):						#if the torrent name ends with '.mkv' then strip the '.mkv' and append the '.torrent' file extension
 				cur_tor = re.sub(r"].mkv", '].torrent', cur_tor)
@@ -107,7 +122,7 @@ if __name__ == "__main__":
 			else:
 				cur_tor = str(cur_tor) + '.torrent'
 
-			cur_tor_url = 'https://nyaa.si' + str(tor_list[i])			#append the URL to the domain
+			cur_tor_url = 'https://nyaa.si' + str(tor_list[i])				#append the URL to the domain
 			r = requests.get(str(cur_tor_url), allow_redirects=True)			#GET the .torrent file
 
 			print(str(cur_tor) + "\n" + str(cur_tor_url) + "\n")				#display the torrent name and the full url
