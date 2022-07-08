@@ -1,44 +1,25 @@
 #!/bin/bash
 
-readonly torstate='/home/ubuntu/Documents/nyaa/.temp/torstate'
+readonly email='python3 /home/ubuntu/Documents/cat-cafe/sendemail.py'
 readonly space=' '
-readonly colon=':'
-readonly equal='='
 
-#get the list of torrents
-full_list=$(transmission-remote -l)
+while :
+do
 
-echo "$full_list"
+	current_line=$(transmission-remote -l | grep 'Finished  ' | head -1)
 
-printf "\n\n"
-
-while IFS= read -r line; do
-    
-	downloading_name=$(grep ' Downloading ' <<< "$line" | sed -e 's/.*Downloading  //')
-
-	if [ "${downloading_name}" ]:
+	if [ -n "$current_line" ]
 	then
 
-		dotenv -f "$torstate" -q never set "$downloading_name" 'Downloading'
-	
-	else
+		current_torrent_name=$(sed -e 's/.*Finished   //' <<< $current_line)
+		current_torrent_name=${current_torrent_name#$space*$space}
 
+		current_torrent_id=$(awk '{print $1}' <<< $current_line)
 
+		#echo -e "finished line: ${current_line}\ntorrent name: ${current_torrent_name}\ntorrent id: ${current_torrent_id}"
+		
+		$email "$current_torrent_name" && transmission-remote -t ${current_torrent_id} -r
 
 	fi
-
-	finished_name=$(grep ' Finished ' <<< "$line" | sed -e 's/.*Finished  //')
-	finished_name=${finished_name#*$space}
-
-
-done <<< "$full_list"
-
-
-
-
-
-
-
-
-
-
+	sleep 30
+done
