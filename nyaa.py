@@ -53,6 +53,7 @@ if __name__ == "__main__":
 	except Exception as e:
 		print("Error: BeautifulSoup failed to parse\n")
 		print(e)
+		quit()
 	
 	else:
 		anchor = ''										#variable to store all anchor <a> tags
