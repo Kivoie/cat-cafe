@@ -44,6 +44,7 @@ if __name__ == "__main__":
 	else:
 
 		html_page = client.read()								#read the entire html page, save to variable
+	finally:
 		client.close()										#close tcp stream
 
 
