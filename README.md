@@ -27,9 +27,9 @@ Setup a cron job for `checktor.sh` and `stoptor.sh` to start upon boot (use `cro
   
   
   
-## Legal
+### Legal
 cat-cafe  Copyright (C) 2022  Danny Vuong  
 This program comes with ABSOLUTELY NO WARRANTY.  
 This is free software, and you are welcome to redistribute it  
-tunder certain conditions. See the GNU General Public License  
+under certain conditions. See the GNU General Public License  
 for more details.
