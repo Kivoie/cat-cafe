@@ -9,7 +9,7 @@ Clone the repository and start the bot:
 ```
 git clone https://github.com/Kivoie/cat-cafe.git
 cd cat-cafe
-python3 nyaa.py "nyaa.si.URI.here"
+python3 nyaa.py "nyaa.si/URI/here"
 ```
   
 A valid URI will look something like `https://nyaa.si/?f=0&c=1_0&q=%5BHorribleSubs%5D+sword+art+online+2+1080p`. Make sure to enclose within **double quotation marks**.
@@ -27,7 +27,7 @@ Setup a cron job for `checktor.sh` and `stoptor.sh` to start upon boot (use `cro
   
   
   
-### Legal
+## Legal
 cat-cafe  Copyright (C) 2022  Danny Vuong  
 This program comes with ABSOLUTELY NO WARRANTY.  
 This is free software, and you are welcome to redistribute it  
