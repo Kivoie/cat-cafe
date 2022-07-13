@@ -17,6 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# # # # # # # # # # # # # # # # # # # # # #
+# Overview: Background task to remove torrents
+# that are already finished from the Transmission
+# torrent list. Removes the torrent metadata, not
+# the actual downloaded data.
+
 readonly email='python3 /home/ubuntu/Documents/cat-cafe/sendemail.py'
 readonly space=' '
 

@@ -17,6 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# # # # # # # # # # # # # # # # # # # # # #
+# Overview: stop torrent
+
 while :
 do
 	sleep 30									#poll every n seconds
