@@ -1,5 +1,6 @@
 import smtplib, codecs, os, subprocess, sys, time, re
 from datetime import datetime
+import dotenv
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # cat-cafe Torrent Bot
@@ -18,10 +19,18 @@ from datetime import datetime
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# # # # # # # # # # # # # # # # # # # # # #
+# Overview: Sends the user an email once any torrent
+# is completed (labeled as "Finished"). Create
+# a Gmail application and save variables to a
+# '.env' file in the same directory.
+
 SMTP_SERVER = 'smtp.gmail.com' #Email Server (don't change!)
 SMTP_PORT = 587 #Server Port (don't change!)
-GMAIL_USERNAME = 'xkissova@gmail.com' #change this to match your gmail account
-GMAIL_PASSWORD = codecs.encode('bppcnheqijorphwb', 'rot-13')
+GMAIL_USERNAME = str(dotenv.get_key('./.env', 'GMAIL_USERNAME'))
+GMAIL_PASSWORD = str(dotenv.get_key('./.env', 'GMAIL_PASSWORD'))
+
+print(GMAIL_USERNAME + "\n" + GMAIL_PASSWORD)
 
 class Emailer:
 	def sendmail(self, recipient, subject, content):
@@ -53,7 +62,7 @@ if __name__ == "__main__":
 	except Exception as e:
 		print(e)
 	else:
-		sendTo = 'mindarc14@gmail.com'
+		sendTo = str(dotenv.get_key('./.env', 'SEND_TO'))
 		emailSubject = 'Turing: Torrent Done! ' + passedParameter1
 
 		try:
@@ -64,6 +73,8 @@ if __name__ == "__main__":
 			current_time = datetime.now()
 			torrent_list = re.sub(r"\\n", '<br>', str(torrent_list.communicate()[0]))
 			torrent_list = re.sub(r"b\'", '', str(torrent_list))
+			
+			#email body is styled using HTML as specified in the headers at the top
 			emailContent = 'Torrent \'' + str(passedParameter1) + '\' completed. Log in to verify.' + \
 				"<br><br><p style=\"font-family: courier; white-space: pre-wrap; font-size: 16px;\"><b>Transmission-CLI Ubuntu - Live Report<br>Updated [" + str(current_time.strftime("%Y-%m-%d %H:%H:%S")) +\
 				"]</b><br>--------------------------<br>" + str(torrent_list)[:-1] + "</p>"
@@ -71,11 +82,11 @@ if __name__ == "__main__":
 			try:
 				emailer.sendmail(sendTo, emailSubject, emailContent)
 			except Exception as e:
-				print('Email send failed.' + "\n" + e)
+				print('Email send failed. Retrying...' + "\n" + e)
 				time.sleep(10)
 				try:
 					emailer.sendmail(sendTo, emailSubject, emailContent)
 				except Exception as e:
-					print('Email send failed again' + "\n" + e)
+					print('Email send failed again. Stopping.' + "\n" + e)
 
 		
