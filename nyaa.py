@@ -18,7 +18,22 @@ from bs4 import BeautifulSoup
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# # # # # # # # # # # # # # # # # # # # # #
+# Overview: Code to parse https://nyaa.si for
+# HTML magnets/torrent URIs, and download
+# '.torrent' files. You can setup Transmission
+# to automatically add and start new .torrent
+# files. Refer to the following documentation
+# on configuring Transmission CLI:
+# https://github.com/transmission/transmission/blob/main/docs/Editing-Configuration-Files.md
 
+# # # # # # # # # # # # # # # # # # # # # #
+# Specifics: Parses for '.mkv' and '.mp4' files
+# as those are the most file formats found on
+# this site. Play using VLC media player or
+# any equivalent player with '.mkv' support.
+# If code finds a 'batch' file, download that
+# instead of each file individually.
 
 downloads_dir = '/home/ubuntu/Downloads/'
 
@@ -35,7 +50,7 @@ if __name__ == "__main__":
 
 	try:
 		print(url)
-		client = urllib.request.urlopen(url)							#(attempt to) open a tcp stream. May fail for servers guarded by Cloudflare
+		client = urllib.request.urlopen(url)							#(attempt to) open a tcp stream. May fail for servers guarded by Cloudflare (?)
 	
 	except Exception as e:
 		print("Unable to open remote url.\n")
@@ -138,7 +153,7 @@ if __name__ == "__main__":
 			if batch_find != None:								#stop iterating if the downloaded file is the 'batch' torrent file
 				break
 
-			#old logic to add and start the torrents
+			#old logic to add and start each torrent downloaded. Use this if you do not want to use auto-start feature in Transmission CLI.
 			#else:
 			#	try:
 			#		os.chmod(str(cur_tor), 0o744)
