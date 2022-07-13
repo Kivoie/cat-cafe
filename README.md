@@ -1,6 +1,6 @@
 # cat-cafe Torrent Bot
 
-A Python bot for automating torrenting tasks. Operator receives an email once a torrent is finished downloading. Only supports Transmission CLI. Intended to be run on a SoC (RPi, Jetson, etc) running Ubuntu Server.
+A Python bot for automating torrenting tasks. Operator receives an email once a torrent is finished downloading. Only supports Transmission CLI. Intended to be run on a SoC (RPi, Jetson, etc) running Ubuntu Server. Basically: automatically downloads Anime.
   
 
 ## Getting Started
@@ -12,7 +12,7 @@ cd cat-cafe
 python3 nyaa.py "nyaa.si/URI/here"
 ```
   
-A valid URI will look something like `https://nyaa.si/?f=0&c=1_0&q=%5BHorribleSubs%5D+sword+art+online+2+1080p`. Make sure to enclose within **double quotation marks**.
+A valid URI will look something like `https://nyaa.si/?f=0&c=1_0&q=%5BHorribleSubs%5D+sword+art+online+2+1080p`. Make sure to enclose within **double quotation marks**. Intended to be used only on `https://nyaa.si`, will not work for other sites.
 
 Setup a cron job for `checktor.sh` and `stoptor.sh` to start upon boot (use `crontab -e` to edit cron jobs):
 ```
