@@ -30,8 +30,6 @@ SMTP_PORT = 587 #Server Port (don't change!)
 GMAIL_USERNAME = str(dotenv.get_key('./.env', 'GMAIL_USERNAME'))
 GMAIL_PASSWORD = str(dotenv.get_key('./.env', 'GMAIL_PASSWORD'))
 
-print(GMAIL_USERNAME + "\n" + GMAIL_PASSWORD)
-
 class Emailer:
 	def sendmail(self, recipient, subject, content):
 
