@@ -39,7 +39,7 @@ downloads_dir = '/home/ubuntu/Downloads/'
 
 if __name__ == "__main__":
 
-	print("\tcat-cafe  Copyright (C) 2022  Danny Vuong\n\tThis program comes with ABSOLUTELY NO WARRANTY.\n\tThis is free software, and you are welcome to redistribute it\n\tunder certain conditions.")
+	print("\tcat-cafe  Copyright (C) 2022  Danny Vuong\n\tThis program comes with ABSOLUTELY NO WARRANTY.\n\tThis is free software, and you are welcome to redistribute it\n\tunder certain conditions.\n\n")
 
 	try:
 		url = str(sys.argv[1])
