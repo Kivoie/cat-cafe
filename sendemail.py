@@ -79,7 +79,7 @@ if __name__ == "__main__":
 			
 			#email body is styled using HTML as specified in the headers at the top
 			emailContent = 'Torrent \'' + str(passedParameter1) + '\' completed. Log in to verify.' + \
-				"<br><br><p style=\"font-family: courier; white-space: pre-wrap; font-size: 16px;\"><b>Transmission-CLI Ubuntu - Live Report<br>Updated [" + str(current_time.strftime("%Y-%m-%d %H:%H:%S")) +\
+				"<br><br><p style=\"font-family: courier; white-space: pre-wrap; font-size: 16px;\"><b>Transmission-CLI Ubuntu - Live Report<br>Updated [" + str(current_time.strftime("%Y-%m-%d %H:%M:%S")) +\
 				"]</b><br>--------------------------<br>" + str(torrent_list)[:-1] + "</p>"
 
 			try:
