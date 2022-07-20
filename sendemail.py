@@ -25,10 +25,16 @@ import dotenv
 # a Gmail application and save variables to a
 # '.env' file in the same directory.
 
+try:
+	os.chdir('/home/ubuntu/Documents/cat-cafe/')
+except Exception as e:
+	print(e)
+
 SMTP_SERVER = 'smtp.gmail.com' #Email Server (don't change!)
 SMTP_PORT = 587 #Server Port (don't change!)
 GMAIL_USERNAME = str(dotenv.get_key('./.env', 'GMAIL_USERNAME'))
 GMAIL_PASSWORD = str(dotenv.get_key('./.env', 'GMAIL_PASSWORD'))
+logging = '/home/ubuntu/Documents/my_debugs.log'
 
 class Emailer:
 	def sendmail(self, recipient, subject, content):
@@ -50,7 +56,6 @@ class Emailer:
 		session.sendmail(GMAIL_USERNAME, recipient, headers + "\r\n\r\n" + content)
 		session.quit
 
-
 if __name__ == "__main__":
 
 	emailer = Emailer()
@@ -64,7 +69,7 @@ if __name__ == "__main__":
 		emailSubject = 'Turing: Torrent Done! ' + passedParameter1
 
 		try:
-			torrent_list = subprocess.Popen('transmission-remote -l', stdout=subprocess.PIPE, shell=True)
+			torrent_list = subprocess.Popen('sudo transmission-remote -l', stdout=subprocess.PIPE, shell=True)
 		except Exception as e:
 			print(e)
 		else:
@@ -81,10 +86,23 @@ if __name__ == "__main__":
 				emailer.sendmail(sendTo, emailSubject, emailContent)
 			except Exception as e:
 				print('Email send failed. Retrying...' + "\n" + e)
+				with open(logging, 'a+') as logfile:
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email FAILED TO SEND to' + str(sendTo) + ".\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
+
 				time.sleep(10)
+
 				try:
 					emailer.sendmail(sendTo, emailSubject, emailContent)
 				except Exception as e:
 					print('Email send failed again. Stopping.' + "\n" + e)
+					with open(logging, 'a+') as logfile:
+						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email FAILED TO SEND AGAIN to' + str(sendTo) + ".\n")
+						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
+
+			else:
+				with open(logging, 'a+') as logfile:
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email sent to ' + str(sendTo) + ".\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
 
 		
