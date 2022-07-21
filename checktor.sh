@@ -24,23 +24,25 @@
 # the actual downloaded data.
 
 readonly email='sudo python3 /home/ubuntu/Documents/cat-cafe/sendemail.py'
+readonly animelist='/home/ubuntu/Downloads/animelist'
 readonly space=' '
 
 while :
 do
 
-	current_line=$(transmission-remote -l | grep 'Finished  ' | head -1)
+	current_line=$(transmission-remote -l | grep 'Finished  ' | head -1)					#find the torrents that are already marked as finished
 
-	if [ -n "$current_line" ]
+	if [ -n "$current_line" ]										#each torrent entry contains data like down/up, total size, ETA, state, etc
 	then	
 
-		current_torrent_name=$(sed -e 's/.*Finished   //' <<< $current_line)
-		current_torrent_name=${current_torrent_name#$space*$space}
+		current_torrent_name=$(sed -e 's/.*Finished   //' <<< $current_line)				#strip all leading characters, until and including the longest occurence of string 'Finished'
+		current_torrent_name=${current_torrent_name#$space*$space}					#strip all leading space ' ' characters
 
-		current_torrent_id=$(awk '{print $1}' <<< $current_line)
+		current_torrent_id=$(awk '{print $1}' <<< $current_line)					#isolate for the first variable in the torrent entry (the torrent ID number). ID does not persist upon daemon restart
 
-		$email "${current_torrent_name}" && sudo transmission-remote -t ${current_torrent_id} -r
+		$email "${current_torrent_name}" && sudo transmission-remote -t ${current_torrent_id} -r	#run the email python program with the torrent title as the subject line, and remove said torrent from list
+		printf "${current_torrent_name}\n" >> $animelist						#log the torrent name to the anime list
 
 	fi
-	sleep 30
+	sleep 30												#run check every 30 seconds
 done
