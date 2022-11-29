@@ -177,7 +177,7 @@ if __name__ == "__main__":
 
 
 		try:
-			subprocess.run(['transmission-remote', '-l'])
+			subprocess.run(['transmission-remote', '-l'])					#print to terminal
 		except Exception as e:
 			print("Error: could not start subprocess: transmission-remote -l\n")
 			print(e)
