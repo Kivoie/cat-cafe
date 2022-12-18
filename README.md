@@ -2,7 +2,6 @@
 
 A Python bot for automating torrenting tasks. Operator receives an email once a torrent is finished downloading. Only supports Transmission CLI. Intended to be run on a SoC (RPi, Jetson, etc) running Ubuntu Server. Basically: automatically downloads Anime.
   
-
 ## Getting Started
 
 Clone the repository and start the bot:
@@ -25,11 +24,14 @@ Setup a cron job for `checktor.sh` and `stoptor.sh` to start upon boot (use `cro
 `checktor.sh` is responsible for determining WHEN to send the email.  
 `stoptor.sh` is responsible for stopping Seeding torrents.
   
-  
-  
 ## Legal
 cat-cafe  Copyright (C) 2022  Danny Vuong  
 This program comes with ABSOLUTELY NO WARRANTY.  
 This is free software, and you are welcome to redistribute it  
 under certain conditions. See the GNU General Public License  
-for more details.
+for more details.  
+
+I, Danny Vuong, am in no way liable whatsoever for any  
+damages any user may cause as a result of P2P filesharing. By  
+using any script(s) in this repository, you agree to the  
+risks of using P2P filesharing.
