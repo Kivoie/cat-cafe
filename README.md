@@ -26,12 +26,6 @@ Setup a cron job for `checktor.sh` and `stoptor.sh` to start upon boot (use `cro
   
 ## Legal
 cat-cafe  Copyright (C) 2022  Danny Vuong  
-This program comes with ABSOLUTELY NO WARRANTY.  
-This is free software, and you are welcome to redistribute it  
-under certain conditions. See the GNU General Public License  
-for more details.  
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See the GNU General Public License for more details.  
 
-I, Danny Vuong, am in no way liable whatsoever for any  
-damages any user may cause as a result of P2P filesharing. By  
-using any script(s) in this repository, you agree to the  
-risks of using P2P filesharing.
+I, Danny Vuong, am in no way liable, whatsoever, for any damages any user may cause as a result of P2P filesharing. By using any script(s) in this repository, you agree to the risks and legal consequences of using P2P filesharing including, but not limited to, fines, lawsuits, jail sentence, malwares/viruses, and privacy risks.
