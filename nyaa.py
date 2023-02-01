@@ -1,5 +1,7 @@
-import urllib.request, requests, os, time, re, subprocess, sys
+import urllib.request, requests, os, re, subprocess, sys
+from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
+from time import sleep
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # cat-cafe Torrent Bot
@@ -29,11 +31,12 @@ from bs4 import BeautifulSoup
 
 # # # # # # # # # # # # # # # # # # # # # #
 # Specifics: Parses for '.mkv' and '.mp4' files
-# as those are the most file formats found on
-# this site. Play using VLC media player or
-# any equivalent player with '.mkv' support.
-# If code finds a 'batch' file, download that
-# instead of each file individually.
+# as those are the most common file formats
+# found on this site. Play using VLC media
+# player or any equivalent player with '.mkv'
+# support. If code finds a 'batch' file,
+# download that instead of each file
+# individually.
 
 downloads_dir = '/home/ubuntu/Downloads/'
 
@@ -50,7 +53,10 @@ if __name__ == "__main__":
 
 	try:
 		print(url)
-		client = urllib.request.urlopen(url)							#(attempt to) open a tcp stream. May fail for servers guarded by Cloudflare (?)
+		#client = urllib.request.urlopen(url)							#(attempt to) open a tcp stream. May fail for servers guarded by Cloudflare (?)
+		client = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+		sleep(1)
+
 	
 	except Exception as e:
 		print("Unable to open remote url.\n")
@@ -58,9 +64,12 @@ if __name__ == "__main__":
 	
 	else:
 
-		html_page = client.read()								#read the entire html page, save to variable
-	finally:
-		client.close()										#close tcp stream
+		#html_page = client.read()								#read the entire html page, save to variable
+		html_page = urlopen(client).read()
+		sleep(1)
+
+	#finally:
+		#client.close()										#close tcp stream
 
 
 	try:
@@ -144,14 +153,21 @@ if __name__ == "__main__":
 
 			print(str(cur_tor) + "\n" + str(cur_tor_url) + "\n")				#display the torrent name and the full url
 
-			try:
-				open(str(cur_tor), 'wb').write(r.content)				#save the .torrent file to the file system
-			except Exception as e:
-				print("Error: could not write to file\n")
-				print(e)
+			cur_tor_existing_check = str(cur_tor) + '.added'
+			print(cur_tor_existing_check)
+
+			if not os.path.isfile(str(cur_tor_existing_check)):				#if the torrent file already exists then skip it to avoid downloading the torrent again
+
+				try:
+					open(str(cur_tor), 'wb').write(r.content)			#save the .torrent file to the file system
+				except Exception as e:
+					print("Error: could not write to file\n")
+					print(e)
 			
-			if batch_find != None:								#stop iterating if the downloaded file is the 'batch' torrent file
-				break
+				if batch_find != None:							#stop iterating if the downloaded file is the 'batch' torrent file
+					break
+			else:
+				print(f"Skipping {cur_tor}, already found in Downloads directory")
 
 			#old logic to add and start each torrent downloaded. Use this if you do not want to use auto-start feature in Transmission CLI.
 			#else:
@@ -175,7 +191,7 @@ if __name__ == "__main__":
 			#				print("Error: could not start subprocess: transmission-remote -s\n")
 			#				print(e)
 
-
+		sleep(2)
 		try:
 			subprocess.run(['transmission-remote', '-l'])					#print to terminal
 		except Exception as e:
