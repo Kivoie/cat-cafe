@@ -42,6 +42,8 @@ do
 
 		$email "${current_torrent_name}" && sudo transmission-remote -t ${current_torrent_id} -r	#run the email python program with the torrent title as the subject line, and remove said torrent from list
 		printf "${current_torrent_name}\n" >> $animelist						#log the torrent name to the anime list
+		sort -o $animelist $animelist									#sorts the animelist in a neat, ascending fashion
+		awk -i inplace '!seen[$0]++' $animelist								#removes duplicate lines while editing file in place
 
 	fi
 	sleep 30												#run check every 30 seconds
