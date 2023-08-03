@@ -87,8 +87,8 @@ if __name__ == "__main__":
 			except Exception as e:
 				print('Email send failed. Retrying...' + "\n" + e)
 				with open(logging, 'a+') as logfile:
-					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email FAILED TO SEND to' + str(sendTo) + ".\n")
-					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: smtplib: email FAILED TO SEND to' + str(sendTo) + ".\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: torrent completed successfully: ' + str(passedParameter1) + ". Removing from list...\n")
 
 				time.sleep(10)
 
@@ -97,12 +97,12 @@ if __name__ == "__main__":
 				except Exception as e:
 					print('Email send failed again. Stopping.' + "\n" + e)
 					with open(logging, 'a+') as logfile:
-						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email FAILED TO SEND AGAIN to' + str(sendTo) + ".\n")
-						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
+						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: smtplib: email FAILED TO SEND AGAIN to' + str(sendTo) + ".\n")
+						logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: torrent completed successfully: ' + str(passedParameter1) + ". Removing from list...\n")
 
 			else:
 				with open(logging, 'a+') as logfile:
-					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: smtplib: email sent to ' + str(sendTo) + ".\n")
-					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + ']: ' + 'cat-cafe: torrent completed: ' + str(passedParameter1) + ". Removing from list...\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: smtplib: email sent to ' + str(sendTo) + ".\n")
+					logfile.write('[' + str(datetime.now().strftime("%Y%m%d-%H:%M:%S")) + '] ' + 'cat-cafe: torrent completed successfully: ' + str(passedParameter1) + ". Removing from list...\n")
 
 		
